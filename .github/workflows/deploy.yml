@@ -27,7 +27,7 @@ jobs:
       run: |
         IMAGE=asia-south2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/flask-repo/flask-api
         gcloud builds submit . --tag $IMAGE \
-        --service-account=${{ secrets.GCP_SA_EMAIL }} \
+        --service-account=projects/${{ secrets.GCP_PROJECT_ID }}/serviceAccounts/${{ secrets.GCP_SA_EMAIL }} \
         --gcs-log-dir=gs://flask-files/build-logs/
 
 
