@@ -28,6 +28,7 @@ jobs:
         IMAGE=asia-south2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/flask-repo/flask-api
         gcloud builds submit . --tag $IMAGE \
         --service-account=${{ secrets.GCP_SA_EMAIL }} \
+        --logging=CLOUD_LOGGING_ONLY
 
 
     - name: Deploy to Cloud Run
