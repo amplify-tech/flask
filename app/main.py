@@ -35,7 +35,7 @@ def delete_student(student_id):
 # Health check
 @app.route("/health", methods=["GET"])
 def home():
-    return "Flask Student API is running on port 5000 🚀", 200
+    return "Flask Student API is running on port 8080 🚀", 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=8080)
