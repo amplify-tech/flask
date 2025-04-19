@@ -1,33 +1,41 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Simulated DB
+# In-memory DB (for demo)
 students = []
 
-@app.route("/students", methods=["GET"])
-def get_students():
-    return jsonify(students), 200
-
+# Create
 @app.route("/students", methods=["POST"])
 def add_student():
-    data = request.json
+    data = request.get_json()
     students.append(data)
     return jsonify({"message": "Student added"}), 201
 
-@app.route("/students/<int:index>", methods=["PUT"])
-def update_student(index):
-    if index >= len(students):
-        return jsonify({"error": "Student not found"}), 404
-    students[index] = request.json
-    return jsonify({"message": "Student updated"}), 200
+# Read all
+@app.route("/students", methods=["GET"])
+def get_students():
+    return jsonify(students)
 
-@app.route("/students/<int:index>", methods=["DELETE"])
-def delete_student(index):
-    if index >= len(students):
+# Read one
+@app.route("/students/<int:student_id>", methods=["GET"])
+def get_student(student_id):
+    if student_id < 0 or student_id >= len(students):
         return jsonify({"error": "Student not found"}), 404
-    students.pop(index)
+    return jsonify(students[student_id])
+
+# Delete
+@app.route("/students/<int:student_id>", methods=["DELETE"])
+def delete_student(student_id):
+    if student_id < 0 or student_id >= len(students):
+        return jsonify({"error": "Student not found"}), 404
+    students.pop(student_id)
     return jsonify({"message": "Student deleted"}), 200
 
+# Health check
+@app.route("/", methods=["GET"])
+def home():
+    return "Flask Student API is running on port 8080 🚀", 200
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8080)
