@@ -33,7 +33,7 @@ def delete_student(student_id):
     return jsonify({"message": "Student deleted"}), 200
 
 # Health check
-@app.route("/health", methods=["GET"])
+@app.route("/", methods=["GET"])
 def home():
     return "Flask Student API is running on port 8080 🚀", 200
 
